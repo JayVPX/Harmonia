@@ -1,0 +1,38 @@
+{
+  "id": 1,
+  "title": "Favoritas do Pop",
+  "description": "As melhores músicas pop dos últimos anos",
+  "likes": 0,
+  "gender": "Pop",
+  "created_at": "2025-10-25T19:40:02.085670Z",
+  "tracks": [
+    {
+      "deezer_id": "3135556",
+      "title": "Blinding Lights",
+      "artist": "The Weeknd",
+      "duration": "196",
+      "album": "After Hours",
+      "preview_url": "https://cdns-preview-3.dzcdn.net/stream/c-3a5f8d6f.mp3",
+      "cover_url": "https://cdn-images.dzcdn.net/images/cover/fd00ebd6d30d7253f813dba3bb1c66a9/250x250-000000-80-0-0.jpg"
+    },
+
+    {
+      "deezer_id": "3231101771",
+      "title": "Daylight",
+      "artist": "David Kushner",
+      "album": "Daylight (Reimagined)",
+      "duration": "212",
+      "preview_url": "https://cdnt-preview.dzcdn.net/api/1/1/0/b/d/0/0bd0373ce1fa0cf407dedfdc15463a94.mp3?hdnea=exp=1762746982~acl=/api/1/1/0/b/d/0/0bd0373ce1fa0cf407dedfdc15463a94.mp3*~data=user_id=0,application_id=42~hmac=08251176b83337430d93fc9beba1934766292f93ab72e80a132fecc55be883b2",
+      "cover_url": "https://cdn-images.dzcdn.net/images/cover/35b38dd47620817080f93a56d6da8402/250x250-000000-80-0-0.jpg"
+    },
+    {
+      "deezer_id": "124995668",
+      "title": "Side To Side",
+      "artist": "Ariana Grande",
+      "album": "Dangerous Woman",
+      "duration": "226",
+      "preview_url": "https://cdnt-preview.dzcdn.net/api/1/1/7/e/8/0/7e8c23116649d041bac2f15f39bd7424.mp3?hdnea=exp=1762747034~acl=/api/1/1/7/e/8/0/7e8c23116649d041bac2f15f39bd7424.mp3*~data=user_id=0,application_id=42~hmac=2ad6f760f109dce79b5b16229e089546d4f9eb539ba19071b1e0b1f273b2d58c",
+      "cover_url": "https://cdn-images.dzcdn.net/images/cover/e5bf0368c12f211bdafe91deba06cdda/250x250-000000-80-0-0.jpg"
+    }
+  ]
+}

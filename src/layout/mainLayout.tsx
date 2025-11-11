@@ -1,5 +1,5 @@
-import { Link, Outlet } from "react-router-dom";
-import { Logo, LogoContainer, Navbar } from "./styled";
+import { Outlet } from "react-router-dom";
+import { LinkCustom, Logo, LogoContainer, Menus, Navbar } from "./styled";
 
 export function MainLayout() {
   return (
@@ -8,9 +8,12 @@ export function MainLayout() {
         <LogoContainer>
           <Logo src="/src/assets/HarmoniaLogo.jpg" alt="Harmonia" />
         </LogoContainer>
-        <Link to="/home">Home</Link>
-        <Link to="/playlist/">Minhas Playlists</Link>
-        <Link to="/playlist/all">Melhores Playlists</Link>
+
+        <Menus>
+          <LinkCustom to="/home">Home</LinkCustom>
+          <LinkCustom to="/playlist">Minhas Playlists</LinkCustom>
+          <LinkCustom to="/playlist/all">Melhores</LinkCustom>
+        </Menus>
       </Navbar>
 
       <Outlet />

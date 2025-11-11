@@ -3,25 +3,25 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export interface Music {
-  id: string;
-  titulo: string;
-  artista: string;
-  album: string;
-  cover: string;
-  preview: string;
-  duracao: string;
+  deezer_id: string;
+  title: string;
+  artist: string;
+  // album: string;
+  cover_url: string;
+  preview_url: string;
+  duration: string;
 }
 
 export function useHomeViewModel() {
   const [query, setQuery] = useState<string>("");
   const [music, setMusic] = useState<Music>({
-    album: "",
-    artista: "",
-    cover: "",
-    id: "",
-    preview: "",
-    titulo: "",
-    duracao: "",
+    // album: "",
+    artist: "",
+    cover_url: "",
+    deezer_id: "",
+    preview_url: "",
+    title: "",
+    duration: "",
   });
   const [playlist, setPlaylist] = useState<Music[]>(() => {
     const saved = localStorage.getItem("playlist");
@@ -37,13 +37,13 @@ export function useHomeViewModel() {
       const responseData = response.data.data[0];
 
       const responseMusic: Music = {
-        id: responseData.id,
-        titulo: responseData.title,
-        artista: responseData.artist.name,
-        album: responseData.album.title,
-        duracao: responseData.duration,
-        preview: responseData.preview,
-        cover: responseData.album.cover_medium,
+        deezer_id: responseData.id,
+        title: responseData.title,
+        artist: responseData.artist.name,
+        // album: responseData.album.title,
+        duration: responseData.duration,
+        preview_url: responseData.preview,
+        cover_url: responseData.album.cover_medium,
       };
 
       setMusic(responseMusic);
@@ -54,20 +54,22 @@ export function useHomeViewModel() {
 
   const clearMusic = () => {
     setMusic({
-      album: "",
-      artista: "",
-      cover: "",
-      id: "",
-      preview: "",
-      titulo: "",
-      duracao: "",
+      // album: "",
+      artist: "",
+      cover_url: "",
+      deezer_id: "",
+      preview_url: "",
+      title: "",
+      duration: "",
     });
 
     setQuery("");
   };
 
   const addToPlaylist = () => {
-    const jaExiste = playlist.some((musicP) => musicP.id === music.id);
+    const jaExiste = playlist.some(
+      (musicP) => musicP.deezer_id === music.deezer_id
+    );
 
     if (jaExiste) {
       window.alert("Essa música já está inserida na sua playlist!");
