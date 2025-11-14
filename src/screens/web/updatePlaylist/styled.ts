@@ -1,3 +1,4 @@
+import type { Form } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -12,7 +13,7 @@ const Container = styled.div`
   /* height: 1vh; */
 `;
 
-const Form = styled.form`
+const Body = styled.div`
   display: flex;
   flex-direction: column;
   width: 1080px;
@@ -85,7 +86,7 @@ const MusicTitle = styled.p`
 
 export {
   Container,
-  Form,
+  Body,
   FormBody,
   SearchContainer,
   InputRow,

@@ -1,16 +1,9 @@
-import { useEffect, useState } from "react";
-import type { Music } from "../home/homeViewModel";
 import { Container, PlaylistCardsContainer, Title } from "./styled";
 import { PlaylistCard } from "../../../components/playlistCard/playlistCard";
 import { AllPlaylistsViewModel } from "./playlistViewModel";
 
 export function AllPlaylistsView() {
-  // const [playlist, setPlaylist] = useState<Music[]>(() => {
-  //   const saved = localStorage.getItem("playlist");
-  //   return saved ? JSON.parse(saved) : [];
-  // });
-
-  const { Playlists } = AllPlaylistsViewModel();
+  const { Playlists, sendToPlaylist } = AllPlaylistsViewModel();
 
   return (
     <Container>
@@ -18,6 +11,7 @@ export function AllPlaylistsView() {
       <PlaylistCardsContainer>
         {Playlists.map((playlist, i) => (
           <PlaylistCard
+            onPress={() => sendToPlaylist(String(i + 1))} //TODO editar para ter ID das playlists
             key={i}
             image={playlist.image}
             nome={playlist.nome}

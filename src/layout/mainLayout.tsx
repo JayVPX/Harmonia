@@ -1,11 +1,15 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { LinkCustom, Logo, LogoContainer, Menus, Navbar } from "./styled";
 
 export function MainLayout() {
+  const navigate = useNavigate();
+  const sendToHome = () => {
+    navigate({ pathname: "/home" });
+  };
   return (
     <div>
       <Navbar>
-        <LogoContainer>
+        <LogoContainer onClick={sendToHome}>
           <Logo src="/src/assets/HarmoniaLogo.jpg" alt="Harmonia" />
         </LogoContainer>
 

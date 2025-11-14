@@ -1,31 +1,30 @@
 import { useRef, useState } from "react";
 import {
-  Button,
-  CardRow,
+  GridBody,
   MusicImage,
   MusicImageWrapper,
   PlayButton,
   Text,
 } from "./styled";
-import { Trash2 } from "lucide-react";
 import { FaPlay, FaPause } from "react-icons/fa6";
-
 interface Props {
-  album?: string;
-  artist?: string;
-  music?: string;
-  cover?: string;
-  preview?: string;
-  onClick?: () => void;
+  title: string;
+  artist: string;
+  preview: string;
+  cover: string;
+  album: string;
+  duration: number;
+  position: number;
 }
 
-export function MusicCard({
+export function GridMusicCard({
   album,
   artist,
-  music,
   cover,
-  onClick,
+  duration,
   preview,
+  title,
+  position,
 }: Props) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -33,7 +32,6 @@ export function MusicCard({
   const handlePlayPreview = () => {
     if (!preview) return;
 
-    // Se já existe um áudio tocando, para
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current = null;
@@ -41,14 +39,12 @@ export function MusicCard({
       return;
     }
 
-    // Cria um novo áudio e toca
     const audio = new Audio(preview);
     audio.volume = 0.3;
     audioRef.current = audio;
     audio.play();
     setIsPlaying(true);
 
-    // Quando o áudio terminar, resetar o estado
     audio.addEventListener("ended", () => {
       setIsPlaying(false);
       audioRef.current = null;
@@ -56,9 +52,11 @@ export function MusicCard({
   };
 
   return (
-    <CardRow>
+    <GridBody>
+      <Text>{position}</Text>
+
       <MusicImageWrapper onClick={handlePlayPreview}>
-        <MusicImage src={cover} alt={music} />
+        <MusicImage src={cover} alt={title} />
         <PlayButton>
           {isPlaying ? (
             <FaPause size={12} color="#0d83e4" />
@@ -68,13 +66,9 @@ export function MusicCard({
         </PlayButton>
       </MusicImageWrapper>
 
-      <Text>
-        {music} - {artist}
-      </Text>
       <Text>{album}</Text>
-      <Button>
-        <Trash2 size={24} color="#102539" onClick={onClick} />
-      </Button>
-    </CardRow>
+      <Text>{artist}</Text>
+      <Text>{duration}</Text>
+    </GridBody>
   );
 }

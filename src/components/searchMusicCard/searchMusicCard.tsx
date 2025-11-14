@@ -42,6 +42,7 @@ export function SearchMusicCard({
 
     // Cria um novo áudio e toca
     const audio = new Audio(preview);
+    audio.volume = 0.3;
     audioRef.current = audio;
     audio.play();
     setIsPlaying(true);

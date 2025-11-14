@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import type { Playlist } from "../../../types/playlist";
+import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+import type { UpdatePlaylistType } from "./schema";
 
 export interface Music {
   deezer_id: string;
@@ -81,6 +84,10 @@ export function UpdatePlaylistViewModel() {
 
   const [indexTab, setIndexTab] = useState<number>(0);
 
+  const { handleSubmit, control } = useForm<UpdatePlaylistType>({
+    defaultValues: { descricao: "", nome: "" },
+  });
+
   useEffect(() => {
     fetch("/playlist.json") // caminho relativo à pasta public
       .then((response) => {
@@ -126,6 +133,7 @@ export function UpdatePlaylistViewModel() {
       (track) => track.deezer_id !== id
     );
 
+    toast.success("Música removida com sucesso!");
     setPlaylist({
       ...playlist,
       tracks: updatedTracks,
@@ -139,8 +147,9 @@ export function UpdatePlaylistViewModel() {
       );
 
       if (jaExiste) {
-        window.alert("Essa música já está inserida na sua playlist!");
+        toast.error("Essa música já está inserida na sua playlist!");
       } else {
+        toast.success("Música adicionada com sucesso!");
         setPlaylist({
           ...playlist,
           tracks: [...playlist.tracks, music],
@@ -162,6 +171,13 @@ export function UpdatePlaylistViewModel() {
     setQuery("");
   };
 
+  const OnSubmit = async (data: UpdatePlaylistType) => {
+    try {
+    } catch (Error: any) {
+      console.log("Ocorreu um erro, tente novamente: ", Error);
+    }
+  };
+
   return {
     generos,
     indexTab,
@@ -174,5 +190,8 @@ export function UpdatePlaylistViewModel() {
     removeMusic,
     clearMusic,
     addMusic,
+    handleSubmit,
+    OnSubmit,
+    control,
   };
 }

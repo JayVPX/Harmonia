@@ -7,6 +7,7 @@ import { MyPlaylistsView } from "../screens/web/myPlaylists/myPlaylistsView";
 import { LoginView } from "../screens/auth/login/loginView";
 import { CreatePlaylistView } from "../screens/web/createPlaylist/createPlaylistView";
 import { UpdatePlaylistView } from "../screens/web/updatePlaylist/uploadPlaylistView";
+import { PlaylistDetailsView } from "../screens/web/allPlaylists/playlistDetails/playlistDetailsView";
 
 export function AllRoutes() {
   return (
@@ -21,6 +22,7 @@ export function AllRoutes() {
         <Route path="/playlist/update/:id" element={<UpdatePlaylistView />} />
 
         <Route path="/playlist/all" element={<AllPlaylistsView />} />
+        <Route path="/playlist/all/:id" element={<PlaylistDetailsView />} />
       </Route>
     </Routes>
   );

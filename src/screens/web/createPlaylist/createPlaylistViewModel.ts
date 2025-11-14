@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
-import type { Playlist, Track } from "../../../types/playlist";
-import type { Music } from "../home/homeViewModel";
+import type { Track } from "../../../types/playlist";
+import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+import type { CreatePlaylistType } from "./schema";
 
 export function CreatePlaylistViewModel() {
   const generos = [
@@ -72,6 +74,10 @@ export function CreatePlaylistViewModel() {
 
   const [indexTab, setIndexTab] = useState<number>(0);
 
+  const { handleSubmit, control } = useForm<CreatePlaylistType>({
+    defaultValues: { descricao: "", nome: "" },
+  });
+
   //Function chamada para pesquisar a música
   const searchMusic = async () => {
     try {
@@ -102,7 +108,7 @@ export function CreatePlaylistViewModel() {
     if (!playlist) return;
 
     const updatedTracks = playlist.filter((track) => track.deezer_id !== id);
-
+    toast.success("Música removida com sucesso");
     setPlaylist(updatedTracks);
   };
   //Função para adicionar uma música na playlist
@@ -113,9 +119,11 @@ export function CreatePlaylistViewModel() {
       );
 
       if (jaExiste) {
-        window.alert("Essa música já está inserida na sua playlist!");
+        toast.error("Essa música já está inserida na sua playlist!");
       } else {
+        toast.success("Música adicionada com sucesso!");
         setPlaylist([...playlist, music]);
+        clearMusic();
       }
     }
   };
@@ -133,9 +141,10 @@ export function CreatePlaylistViewModel() {
     setQuery("");
   };
 
-  const OnSubmit = async () => {
+  const OnSubmit = async (data: CreatePlaylistType) => {
     try {
-    } catch {
+    } catch (Error: any) {
+      console.log("Ocorreu um erro, tente novamente: ", Error);
     } finally {
     }
   };
@@ -152,5 +161,8 @@ export function CreatePlaylistViewModel() {
     removeMusic,
     clearMusic,
     addMusic,
+    handleSubmit,
+    OnSubmit,
+    control,
   };
 }

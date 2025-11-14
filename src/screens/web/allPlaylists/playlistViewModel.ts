@@ -1,4 +1,8 @@
+import { useNavigate } from "react-router-dom";
+
 export function AllPlaylistsViewModel() {
+  const navigate = useNavigate();
+
   const Playlists = [
     {
       nome: "TheBestTOP",
@@ -92,5 +96,9 @@ export function AllPlaylistsViewModel() {
     },
   ];
 
-  return { Playlists };
+  const sendToPlaylist = (id: string) => {
+    navigate({ pathname: `/playlist/all/${id}` });
+  };
+
+  return { Playlists, sendToPlaylist };
 }
