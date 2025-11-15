@@ -10,6 +10,7 @@ const MusicCard = styled.div`
   background-color: #5280a8ff;
   padding: 20px 40px;
   border-radius: 16px;
+  width: 250px;
 `;
 
 const MusicImageWrapper = styled.div`
@@ -29,6 +30,7 @@ const MusicTitle = styled.p`
   font-size: 18px;
   font-weight: 900;
   color: white;
+  text-align: justify;
 `;
 
 const PlayButton = styled.div`

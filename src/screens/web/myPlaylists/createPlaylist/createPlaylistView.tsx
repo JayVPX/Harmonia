@@ -1,19 +1,33 @@
-import { Box, MenuItem, Select, Tab, Tabs, TextField } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Tab,
+  Tabs,
+  TextField,
+} from "@mui/material";
 import {
   Body,
   Button,
+  ButtonContainer,
   Container,
   FormBody,
   InputRow,
   MusicContainer,
+  ReturnButton,
   SearchContainer,
+  SubmitButton,
   Title,
 } from "./styled";
 import { CreatePlaylistViewModel } from "./createPlaylistViewModel";
-import { MusicCard } from "../../../components/musicCard/musicCard";
-import type { Track } from "../../../types/playlist";
-import { SearchMusicCard } from "../../../components/searchMusicCard/searchMusicCard";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import { Controller } from "react-hook-form";
+import { MusicCard } from "../../../../components/musicCard/musicCard";
+import { SearchMusicCard } from "../../../../components/searchMusicCard/searchMusicCard";
+import type { Track } from "../../../../model/playlistDto";
 
 export function CreatePlaylistView() {
   const {
@@ -30,7 +44,9 @@ export function CreatePlaylistView() {
     addMusic,
     OnSubmit,
     control,
+    goBack,
     handleSubmit,
+    loading,
   } = CreatePlaylistViewModel();
 
   return (
@@ -47,13 +63,53 @@ export function CreatePlaylistView() {
 
           <Box hidden={indexTab !== 0}>
             <FormBody>
-              <TextField label="Nome " />
-              <TextField label="Descrição " />
-              <Select label="Gênero">
-                {generos.map((g) => (
-                  <MenuItem value={g}>{g}</MenuItem>
-                ))}
-              </Select>
+              <Controller
+                name="nome"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <TextField
+                    label="Nome"
+                    value={field.value}
+                    onChange={field.onChange}
+                    error={!!fieldState.error}
+                  />
+                )}
+              />
+
+              <Controller
+                name="descricao"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <TextField
+                    label="Descrição"
+                    value={field.value}
+                    onChange={field.onChange}
+                    error={!!fieldState.error}
+                  />
+                )}
+              />
+
+              <Controller
+                control={control}
+                name="genero"
+                render={({ field, fieldState }) => (
+                  <FormControl fullWidth error={!!fieldState.error}>
+                    <InputLabel id="genero-playlist">Gênero</InputLabel>
+                    <Select
+                      id="genero-playlist"
+                      labelId="genero-playlist"
+                      label="Gênero"
+                      value={field.value ?? ""}
+                      onChange={field.onChange}
+                      displayEmpty
+                    >
+                      {generos.map((g) => (
+                        <MenuItem value={g}>{g}</MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                )}
+              />
 
               <SearchContainer>
                 <Title>Vamos adicionar músicas</Title>
@@ -106,6 +162,19 @@ export function CreatePlaylistView() {
               ))}
             </FormBody>
           </Box>
+
+          <ButtonContainer>
+            <ReturnButton type="button" onClick={goBack}>
+              Fechar
+            </ReturnButton>
+            <SubmitButton type="submit">
+              {loading && (
+                <CircularProgress sx={{ color: "white" }} size={20} />
+              )}
+
+              {!loading && "Salvar"}
+            </SubmitButton>
+          </ButtonContainer>
         </Body>
       </form>
       <ToastContainer autoClose={2000} position="top-center" />

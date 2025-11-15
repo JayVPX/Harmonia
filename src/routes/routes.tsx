@@ -5,9 +5,10 @@ import { AllPlaylistsView } from "../screens/web/allPlaylists/playlistView";
 import { MainLayout } from "../layout/mainLayout";
 import { MyPlaylistsView } from "../screens/web/myPlaylists/myPlaylistsView";
 import { LoginView } from "../screens/auth/login/loginView";
-import { CreatePlaylistView } from "../screens/web/createPlaylist/createPlaylistView";
-import { UpdatePlaylistView } from "../screens/web/updatePlaylist/uploadPlaylistView";
+
 import { PlaylistDetailsView } from "../screens/web/allPlaylists/playlistDetails/playlistDetailsView";
+import { CreatePlaylistView } from "../screens/web/myPlaylists/createPlaylist/createPlaylistView";
+import { UpdatePlaylistView } from "../screens/web/myPlaylists/updatePlaylist/uploadPlaylistView";
 
 export function AllRoutes() {
   return (

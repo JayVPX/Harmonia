@@ -80,4 +80,19 @@ const PlayButton = styled.div`
   cursor: pointer;
 `;
 
-export { GridBody, MusicImage, MusicImageWrapper, CardRow, PlayButton, Text };
+const ImageTitleContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+`;
+
+export {
+  GridBody,
+  MusicImage,
+  MusicImageWrapper,
+  CardRow,
+  PlayButton,
+  Text,
+  ImageTitleContainer,
+};

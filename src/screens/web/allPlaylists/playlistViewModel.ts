@@ -1,7 +1,11 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import type { Playlist } from "../../../model/playlistDto";
+import api from "../../../service/api";
 
 export function AllPlaylistsViewModel() {
   const navigate = useNavigate();
+  const [playlists, setPlaylists] = useState<Playlist[]>();
 
   const Playlists = [
     {
@@ -96,9 +100,19 @@ export function AllPlaylistsViewModel() {
     },
   ];
 
+  useEffect(() => {
+    const renderData = async () => {
+      const response = await api.get("/playlists/search");
+      if (response.status === 200 || 201) {
+        setPlaylists(response.data);
+      }
+    };
+    renderData();
+  }, []);
+
   const sendToPlaylist = (id: string) => {
     navigate({ pathname: `/playlist/all/${id}` });
   };
 
-  return { Playlists, sendToPlaylist };
+  return { Playlists, sendToPlaylist, playlists };
 }

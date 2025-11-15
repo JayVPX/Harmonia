@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import {
   GridBody,
+  ImageTitleContainer,
   MusicImage,
   MusicImageWrapper,
   PlayButton,
@@ -51,24 +52,39 @@ export function GridMusicCard({
     });
   };
 
+  function formatSecondsToMinutes(seconds: number): string {
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+
+    const paddedMinutes = String(minutes).padStart(2, "0");
+    const paddedSeconds = String(secs).padStart(2, "0");
+
+    return `${paddedMinutes}:${paddedSeconds}`;
+  }
+
   return (
     <GridBody>
       <Text>{position}</Text>
 
-      <MusicImageWrapper onClick={handlePlayPreview}>
-        <MusicImage src={cover} alt={title} />
-        <PlayButton>
-          {isPlaying ? (
-            <FaPause size={12} color="#0d83e4" />
-          ) : (
-            <FaPlay size={12} color="#0d83e4" />
-          )}
-        </PlayButton>
-      </MusicImageWrapper>
+      <ImageTitleContainer>
+        <MusicImageWrapper onClick={handlePlayPreview}>
+          <MusicImage src={cover} alt={title} />
+          <PlayButton>
+            {isPlaying ? (
+              <FaPause size={12} color="#0d83e4" />
+            ) : (
+              <FaPlay size={12} color="#0d83e4" />
+            )}
+          </PlayButton>
+        </MusicImageWrapper>
+        <Text>{title}</Text>
+      </ImageTitleContainer>
 
       <Text>{album}</Text>
+
       <Text>{artist}</Text>
-      <Text>{duration}</Text>
+
+      <Text>{formatSecondsToMinutes(duration)}</Text>
     </GridBody>
   );
 }

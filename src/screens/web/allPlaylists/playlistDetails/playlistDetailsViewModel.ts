@@ -1,5 +1,15 @@
+import { useEffect, useState } from "react";
+import type { Playlist } from "../../../../model/playlistDto";
+import api from "../../../../service/api";
+import { useParams } from "react-router-dom";
+
 export function PlaylistDetailsViewModel() {
   const columns = ["Nº", "Título", "Álbum", "Artista", "Duração"];
+  const [playlist, setPlaylist] = useState<Playlist>();
+  const { id } = useParams();
+
+  console.log("opa olha o id", id);
+
   const music = [
     {
       deezer_id: 2743578151,
@@ -14,5 +24,19 @@ export function PlaylistDetailsViewModel() {
     },
   ];
 
-  return { columns, music };
+  useEffect(() => {
+    const renderData = async () => {
+      const response = await api.get(`/playlists/search/${id}`);
+
+      if (response.status == 200 || 201) {
+        setPlaylist(response.data);
+      } else {
+        console.log("Ocorreu um erro: ", response.statusText);
+      }
+    };
+
+    renderData();
+  }, []);
+
+  return { columns, music, playlist };
 }

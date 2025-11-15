@@ -16,7 +16,6 @@ const Logo = styled.img`
 const AuthBox = styled.div`
   width: 500px;
   padding: 16px;
-  height: 300px;
   background-color: #eaeaea;
   border-radius: 26px;
 `;

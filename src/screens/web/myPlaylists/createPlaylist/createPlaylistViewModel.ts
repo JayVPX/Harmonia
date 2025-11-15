@@ -1,11 +1,19 @@
 import axios from "axios";
 import { useState } from "react";
-import type { Track } from "../../../types/playlist";
+
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import type { CreatePlaylistType } from "./schema";
+import { CreatePlaylistSchema, type CreatePlaylistType } from "./schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { useNavigate } from "react-router-dom";
+import type { Track, Playlist } from "../../../../model/playlistDto";
+import api from "../../../../service/api";
 
 export function CreatePlaylistViewModel() {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
+
   const generos = [
     "Rock",
     "Pop",
@@ -65,7 +73,7 @@ export function CreatePlaylistViewModel() {
     artist: "",
     cover_url: "",
     deezer_id: "",
-    duration: "",
+    duration: 0,
     preview_url: "",
     title: "",
     album: "",
@@ -76,6 +84,7 @@ export function CreatePlaylistViewModel() {
 
   const { handleSubmit, control } = useForm<CreatePlaylistType>({
     defaultValues: { descricao: "", nome: "" },
+    resolver: zodResolver(CreatePlaylistSchema),
   });
 
   //Function chamada para pesquisar a música
@@ -96,7 +105,7 @@ export function CreatePlaylistViewModel() {
         preview_url: responseData.preview,
         cover_url: responseData.album.cover_medium,
       };
-      console.log(responseMusic);
+
       setMusic(responseMusic);
     } catch (Error: any) {
       console.log("Ocorreu um erro: ", Error);
@@ -134,18 +143,41 @@ export function CreatePlaylistViewModel() {
       artist: "",
       cover_url: "",
       deezer_id: "",
-      duration: "",
+      duration: 0,
       preview_url: "",
       title: "",
     });
     setQuery("");
   };
 
+  const goBack = () => {
+    navigate("/playlist");
+  };
+
   const OnSubmit = async (data: CreatePlaylistType) => {
     try {
+      setLoading(true);
+      const payload: Playlist = {
+        description: data.descricao,
+        gender: data.genero,
+        title: data.nome,
+        tracks: playlist,
+      };
+
+      const response = await api.post(`/playlists/`, payload);
+
+      if (response.status == 201 || 200) {
+        toast.success("Playlist criada com sucesso");
+        setTimeout(() => {
+          navigate("/playlist");
+        }, 2500);
+      } else {
+        toast.error("Erro ao criar playlist");
+      }
     } catch (Error: any) {
       console.log("Ocorreu um erro, tente novamente: ", Error);
     } finally {
+      setLoading(false);
     }
   };
 
@@ -164,5 +196,7 @@ export function CreatePlaylistViewModel() {
     handleSubmit,
     OnSubmit,
     control,
+    goBack,
+    loading,
   };
 }

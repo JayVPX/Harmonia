@@ -15,20 +15,18 @@ import {
 } from "./styled";
 
 export function PlaylistDetailsView() {
-  const { columns, music } = PlaylistDetailsViewModel();
+  const { columns, music, playlist } = PlaylistDetailsViewModel();
 
   return (
     <Container>
       <Content>
-        <Title>We are so back</Title>
-        <Desc>
-          As melhores músicas em um só lugar, só vim rapazeada. AURA + EGO
-        </Desc>
+        <Title>{playlist?.title}</Title>
+        <Desc>{playlist?.description}</Desc>
 
         <InfoDataRow>
-          <UserText>@JayVPX</UserText>
+          <UserText>@{playlist?.created_by}</UserText>
           <Pin />
-          <InfoText>149 músicas</InfoText>
+          <InfoText>{playlist?.tracks.length} músicas</InfoText>
         </InfoDataRow>
 
         {/* <Line /> */}
@@ -40,7 +38,7 @@ export function PlaylistDetailsView() {
         </MenuGrid>
 
         <MusicCardsContent>
-          {music.map((m, i) => (
+          {playlist?.tracks.map((m, i) => (
             <GridMusicCard
               album={m.album}
               artist={m.artist}

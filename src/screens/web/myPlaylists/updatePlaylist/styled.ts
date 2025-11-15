@@ -21,6 +21,7 @@ const Body = styled.div`
   padding: 20px;
   border-radius: 20px;
   gap: 20px;
+  margin-bottom: 80px;
 `;
 
 const FormBody = styled.div`
@@ -84,6 +85,50 @@ const MusicTitle = styled.p`
   color: white;
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  margin-top: 80px;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+`;
+
+const SubmitButton = styled.button`
+  background-color: #102539;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  width: 200px;
+
+  transition: 0.3s ease;
+
+  &:hover {
+    background-color: #1f4261ff;
+  }
+`;
+
+const ReturnButton = styled.button`
+  background-color: #77a6d3ff;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  width: 200px;
+
+  transition: 0.3s ease;
+
+  &:hover {
+    background-color: #1f4261ff;
+  }
+`;
+
 export {
   Container,
   Body,
@@ -95,4 +140,7 @@ export {
   MusicContainer,
   MusicImage,
   MusicTitle,
+  ButtonContainer,
+  ReturnButton,
+  SubmitButton,
 };

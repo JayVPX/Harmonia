@@ -6,7 +6,7 @@ const Card = styled.div`
   width: 160px;
   height: 240px;
   background-color: #121212;
-  padding: 10px;
+  padding: 16px 10px;
   border-radius: 16px;
   justify-content: center;
   transition: 0.3s ease-in-out;
@@ -32,9 +32,9 @@ const Image = styled.img`
 const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: flex-start;
-  height: auto;
+  flex: 1;
 `;
 
 const Title = styled.p`
@@ -53,4 +53,34 @@ const Text = styled.p`
   color: #777;
 `;
 
-export { Card, Title, Text, TextContainer, Image, ImageContainer };
+const TrashContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+`;
+
+const TrashButton = styled.div`
+  display: flex;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s ease;
+  &:hover {
+    background-color: #466f96ff;
+  }
+`;
+
+export {
+  Card,
+  Title,
+  Text,
+  TextContainer,
+  Image,
+  ImageContainer,
+  TrashContainer,
+  TrashButton,
+};

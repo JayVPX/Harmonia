@@ -1,21 +1,20 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import type { Playlist } from "../../../types/playlist";
+
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import type { UpdatePlaylistType } from "./schema";
+import { UpdatePlaylistSchema, type UpdatePlaylistType } from "./schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-export interface Music {
-  deezer_id: string;
-  title: string;
-  artist: string;
-  album: string;
-  cover_url: string;
-  preview_url: string;
-  duration: string;
-}
+import { useNavigate, useParams } from "react-router-dom";
+import { json } from "zod";
+import type { Track, Playlist } from "../../../../model/playlistDto";
+import api from "../../../../service/api";
 
 export function UpdatePlaylistViewModel() {
+  const navigate = useNavigate();
+
+  // UseStates
   const generos = [
     "Rock",
     "Pop",
@@ -70,34 +69,52 @@ export function UpdatePlaylistViewModel() {
     "Psychedelic Rock",
     "New Wave",
   ];
+  const [loading, setLoading] = useState<boolean>(false);
+
   const [query, setQuery] = useState<string>("");
-  const [music, setMusic] = useState<Music>({
+  const [music, setMusic] = useState<Track>({
     artist: "",
     cover_url: "",
     deezer_id: "",
-    duration: "",
+    duration: 0,
     preview_url: "",
     title: "",
     album: "",
   });
   const [playlist, setPlaylist] = useState<Playlist>();
 
+  const [tracks, setTracks] = useState<Track[]>([]);
+
   const [indexTab, setIndexTab] = useState<number>(0);
 
-  const { handleSubmit, control } = useForm<UpdatePlaylistType>({
+  // Params ID
+  const { id } = useParams();
+
+  const { handleSubmit, control, reset } = useForm<UpdatePlaylistType>({
     defaultValues: { descricao: "", nome: "" },
+    resolver: zodResolver(UpdatePlaylistSchema),
   });
 
+  //useEffect para renderizar os dados da playlist escolhida
   useEffect(() => {
-    fetch("/playlist.json") // caminho relativo à pasta public
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Erro ao carregar JSON");
-        }
-        return response.json();
-      })
-      .then((json) => setPlaylist(json))
-      .catch((error) => console.error(error));
+    console.log("olá");
+    const renderData = async () => {
+      console.log("Tentando");
+      const response = await api.get(`/playlists/${id}/`);
+      if (response.status === 200) {
+        const responseData = response.data as Playlist;
+        setPlaylist(responseData);
+        reset({
+          descricao: responseData.description,
+          genero: responseData.gender,
+          nome: responseData.title,
+        });
+        setTracks(responseData.tracks);
+      } else {
+        toast.error("Ocorreu um erro, tente novamente");
+      }
+    };
+    renderData();
   }, []);
 
   //Function chamada para pesquisar a música
@@ -109,7 +126,7 @@ export function UpdatePlaylistViewModel() {
 
       const responseData = response.data.data[0];
 
-      const responseMusic: Music = {
+      const responseMusic: Track = {
         deezer_id: responseData.id,
         title: responseData.title,
         artist: responseData.artist.name,
@@ -127,22 +144,18 @@ export function UpdatePlaylistViewModel() {
 
   //Função para remover uma música da playlist
   const removeMusic = (id: string) => {
-    if (!playlist) return;
+    if (!tracks) return;
 
-    const updatedTracks = playlist.tracks.filter(
-      (track) => track.deezer_id !== id
-    );
+    const updatedTracks = tracks.filter((track) => track.deezer_id !== id);
 
     toast.success("Música removida com sucesso!");
-    setPlaylist({
-      ...playlist,
-      tracks: updatedTracks,
-    });
+    setTracks(updatedTracks);
   };
 
+  // Função para adicionar música na playlist
   const addMusic = () => {
-    if (playlist) {
-      const jaExiste = playlist.tracks.some(
+    if (tracks) {
+      const jaExiste = tracks.some(
         (musicP) => musicP.deezer_id === music.deezer_id
       );
 
@@ -150,31 +163,56 @@ export function UpdatePlaylistViewModel() {
         toast.error("Essa música já está inserida na sua playlist!");
       } else {
         toast.success("Música adicionada com sucesso!");
-        setPlaylist({
-          ...playlist,
-          tracks: [...playlist.tracks, music],
-        });
+        setTracks([...tracks, music]);
+        clearMusic();
       }
     }
   };
 
+  // Função para limpar música pesquisada
   const clearMusic = () => {
     setMusic({
       album: "",
       artist: "",
       cover_url: "",
       deezer_id: "",
-      duration: "",
+      duration: 0,
       preview_url: "",
       title: "",
     });
     setQuery("");
   };
 
+  const goBack = () => {
+    navigate("/playlist");
+  };
+
   const OnSubmit = async (data: UpdatePlaylistType) => {
     try {
+      setLoading(true);
+
+      const payload: Playlist = {
+        id: Number(id),
+        title: data.nome,
+        description: data.descricao,
+        gender: data.genero,
+        tracks: tracks,
+      };
+
+      const response = await api.put(`/playlists/${id}/`, payload);
+
+      if (response.status === 200) {
+        toast.success("A playlist foi atualizada com sucesso");
+        setTimeout(() => {
+          goBack();
+        }, 2500);
+      } else {
+        toast.error("Erro ao atualizar playlist");
+      }
     } catch (Error: any) {
       console.log("Ocorreu um erro, tente novamente: ", Error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -193,5 +231,8 @@ export function UpdatePlaylistViewModel() {
     handleSubmit,
     OnSubmit,
     control,
+    tracks,
+    goBack,
+    loading,
   };
 }
