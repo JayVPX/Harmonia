@@ -9,20 +9,17 @@ import {
   TitleContainer,
 } from "./styled";
 import { Controller } from "react-hook-form";
+import { ToastContainer } from "react-toastify";
 
 export function LoginView() {
   const {
     OnSubmit,
     OnRegister,
-    password,
-    setPassword,
-    username,
-    setUsername,
+
     loading,
     isRegister,
     setIsRegister,
     control,
-    handleSubmit,
   } = LoginViewModel();
 
   return (
@@ -33,7 +30,7 @@ export function LoginView() {
             <Title>{isRegister ? "Registrar" : "Login"}</Title>
           </TitleContainer>
 
-          {/* <Controller
+          <Controller
             name="username"
             control={control}
             render={({ field, fieldState }) => (
@@ -77,7 +74,7 @@ export function LoginView() {
 
           {isRegister && (
             <Controller
-              name="confirmPassword"
+              name="password2"
               control={control}
               render={({ field, fieldState }) => (
                 <TextField
@@ -89,23 +86,11 @@ export function LoginView() {
                 />
               )}
             />
-          )} */}
-
-          <TextField
-            label="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <TextField
-            label="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          )}
 
           <Button
             variant="contained"
-            // onClick={() => (isRegister ? OnRegister() : OnSubmit())}
-            onClick={OnSubmit}
+            onClick={isRegister ? OnRegister : OnSubmit}
           >
             {loading ? (
               <CircularProgress sx={{ color: "white" }} size={20} />
@@ -129,6 +114,7 @@ export function LoginView() {
       </AuthBox>
 
       <Logo src="/src/assets/HarmoniaLogo.jpg" alt="Harmonia" />
+      <ToastContainer position="top-center" autoClose={2000} />
     </Container>
   );
 }
