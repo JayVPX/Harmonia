@@ -23,18 +23,29 @@ const Logo = styled.img`
 const Menus = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 100px;
+  gap: 40px;
   align-items: center;
 `;
 
 const LinkCustom = styled(Link)`
-  padding: 4px 16px;
+  display: flex;
+  flex-direction: row;
+  padding: 6px 16px;
   text-decoration: none;
   color: white;
   border-radius: 8px;
-
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
   &:hover {
     background-color: #1f4261ff;
   }
 `;
-export { Navbar, Logo, LogoContainer, Menus, LinkCustom };
+
+const LinkText = styled.p`
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0px;
+`;
+export { Navbar, Logo, LogoContainer, Menus, LinkCustom, LinkText };

@@ -10,6 +10,7 @@ import {
 } from "./styled";
 import { Controller } from "react-hook-form";
 import { ToastContainer } from "react-toastify";
+import { FormInput as Input } from "../../../components/inputForm";
 
 export function LoginView() {
   const {
@@ -34,11 +35,12 @@ export function LoginView() {
             name="username"
             control={control}
             render={({ field, fieldState }) => (
-              <TextField
+              <Input
                 placeholder="Digite seu username"
                 label="Username"
                 value={field.value}
                 onChange={field.onChange}
+                errors={fieldState.error?.message}
               />
             )}
           />
@@ -48,11 +50,12 @@ export function LoginView() {
               name="email"
               control={control}
               render={({ field, fieldState }) => (
-                <TextField
+                <Input
                   placeholder="Digite seu E-mail"
                   label="E-mail"
                   value={field.value}
                   onChange={field.onChange}
+                  errors={fieldState.error?.message}
                 />
               )}
             />
@@ -62,12 +65,13 @@ export function LoginView() {
             name="password"
             control={control}
             render={({ field, fieldState }) => (
-              <TextField
+              <Input
                 placeholder="Digite sua senha"
                 label="Senha"
                 type="password"
                 value={field.value}
                 onChange={field.onChange}
+                errors={fieldState.error?.message}
               />
             )}
           />
@@ -77,12 +81,13 @@ export function LoginView() {
               name="password2"
               control={control}
               render={({ field, fieldState }) => (
-                <TextField
+                <Input
                   placeholder="Confirme a senha"
                   type="password"
                   label="Confirmar senha"
                   value={field.value}
                   onChange={field.onChange}
+                  errors={fieldState.error?.message}
                 />
               )}
             />

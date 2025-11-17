@@ -2,6 +2,7 @@ import {
   Box,
   CircularProgress,
   FormControl,
+  FormHelperText,
   InputLabel,
   MenuItem,
   Select,
@@ -28,6 +29,7 @@ import { Controller } from "react-hook-form";
 import { MusicCard } from "../../../../components/musicCard/musicCard";
 import { SearchMusicCard } from "../../../../components/searchMusicCard/searchMusicCard";
 import type { Track } from "../../../../model/playlistDto";
+import { FormInput as Input } from "../../../../components/inputForm";
 
 export function CreatePlaylistView() {
   const {
@@ -67,11 +69,11 @@ export function CreatePlaylistView() {
                 name="nome"
                 control={control}
                 render={({ field, fieldState }) => (
-                  <TextField
+                  <Input
                     label="Nome"
                     value={field.value}
                     onChange={field.onChange}
-                    error={!!fieldState.error}
+                    errors={fieldState.error?.message}
                   />
                 )}
               />
@@ -80,11 +82,13 @@ export function CreatePlaylistView() {
                 name="descricao"
                 control={control}
                 render={({ field, fieldState }) => (
-                  <TextField
+                  <Input
                     label="Descrição"
                     value={field.value}
                     onChange={field.onChange}
-                    error={!!fieldState.error}
+                    errors={fieldState.error?.message}
+                    isMultiline={true}
+                    rows={4}
                   />
                 )}
               />
@@ -107,6 +111,12 @@ export function CreatePlaylistView() {
                         <MenuItem value={g}>{g}</MenuItem>
                       ))}
                     </Select>
+
+                    {fieldState.error && (
+                      <FormHelperText style={{ color: "red" }}>
+                        {fieldState.error.message}
+                      </FormHelperText>
+                    )}
                   </FormControl>
                 )}
               />

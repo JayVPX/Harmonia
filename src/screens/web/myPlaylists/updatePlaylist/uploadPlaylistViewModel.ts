@@ -7,7 +7,7 @@ import { UpdatePlaylistSchema, type UpdatePlaylistType } from "./schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useNavigate, useParams } from "react-router-dom";
-import { json } from "zod";
+
 import type { Track, Playlist } from "../../../../model/playlistDto";
 import api from "../../../../service/api";
 
@@ -191,6 +191,10 @@ export function UpdatePlaylistViewModel() {
     try {
       setLoading(true);
 
+      if (tracks.length == 0) {
+        toast.error("Adicione alguma música na playlist");
+        return;
+      }
       const payload: Playlist = {
         id: Number(id),
         title: data.nome,

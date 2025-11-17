@@ -27,6 +27,8 @@ export function PlaylistDetailsView() {
           <UserText>@{playlist?.created_by}</UserText>
           <Pin />
           <InfoText>{playlist?.tracks.length} músicas</InfoText>
+          <Pin />
+          <InfoText>{playlist?.gender}</InfoText>
         </InfoDataRow>
 
         {/* <Line /> */}

@@ -2,6 +2,7 @@ import {
   Box,
   CircularProgress,
   FormControl,
+  FormHelperText,
   InputLabel,
   MenuItem,
   Select,
@@ -22,6 +23,8 @@ import {
   SubmitButton,
   Title,
 } from "./styled";
+
+import { FormInput as Input } from "../../../../components/inputForm";
 
 import { UpdatePlaylistViewModel } from "./uploadPlaylistViewModel";
 import { ToastContainer } from "react-toastify";
@@ -68,11 +71,11 @@ export function UpdatePlaylistView() {
                 name="nome"
                 control={control}
                 render={({ field, fieldState }) => (
-                  <TextField
+                  <Input
                     label="Nome"
                     value={field.value}
                     onChange={field.onChange}
-                    error={!!fieldState.error}
+                    errors={fieldState.error?.message}
                   />
                 )}
               />
@@ -81,11 +84,13 @@ export function UpdatePlaylistView() {
                 name="descricao"
                 control={control}
                 render={({ field, fieldState }) => (
-                  <TextField
+                  <Input
                     label="Descrição"
                     value={field.value}
                     onChange={field.onChange}
-                    error={!!fieldState.error}
+                    errors={fieldState.error?.message}
+                    isMultiline={true}
+                    rows={4}
                   />
                 )}
               />
@@ -108,6 +113,12 @@ export function UpdatePlaylistView() {
                         <MenuItem value={g}>{g}</MenuItem>
                       ))}
                     </Select>
+
+                    {fieldState.error && (
+                      <FormHelperText style={{ color: "red" }}>
+                        {fieldState.error.message}
+                      </FormHelperText>
+                    )}
                   </FormControl>
                 )}
               />

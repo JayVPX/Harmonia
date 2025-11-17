@@ -30,7 +30,7 @@ const MusicTitle = styled.p`
   font-size: 18px;
   font-weight: 900;
   color: white;
-  text-align: justify;
+  text-align: center;
 `;
 
 const PlayButton = styled.div`

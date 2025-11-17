@@ -157,6 +157,12 @@ export function CreatePlaylistViewModel() {
   const OnSubmit = async (data: CreatePlaylistType) => {
     try {
       setLoading(true);
+
+      if (playlist.length == 0) {
+        toast.error("Adicione alguma música na playlist");
+        return;
+      }
+
       const payload: Playlist = {
         description: data.descricao,
         gender: data.genero,
