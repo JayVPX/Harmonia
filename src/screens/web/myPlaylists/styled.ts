@@ -15,6 +15,9 @@ const Container = styled.div`
 const Title = styled.h1`
   margin-bottom: 60px;
 `;
+const Subtitle = styled.h3`
+  margin-bottom: 60px;
+`;
 
 const PlaylistCardsContainer = styled.div`
   display: flex;
@@ -43,4 +46,4 @@ const AddButton = styled.div`
     background-color: #1f1f1f;
   }
 `;
-export { Container, Title, PlaylistCardsContainer, AddButton };
+export { Container, Title, PlaylistCardsContainer, AddButton, Subtitle };
